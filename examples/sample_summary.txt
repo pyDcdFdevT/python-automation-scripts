@@ -1,0 +1,16 @@
+CSV PROCESS REPORT
+===================
+Total cleaned rows: 4
+
+Numeric columns summary:
+- age
+  count: 3
+  min:   25.00
+  max:   40.00
+  avg:   31.67
+
+- salary
+  count: 3
+  min:   50000.00
+  max:   70000.00
+  avg:   60000.00
