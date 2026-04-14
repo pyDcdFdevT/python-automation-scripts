@@ -20,6 +20,3 @@ Output: Processed data with calculated values
 ## How to run
 ```bash
 python script.py
-
-Author
-Diego
