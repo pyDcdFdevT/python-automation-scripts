@@ -45,9 +45,27 @@ python csv_processor.py input.csv --output-dir results
 
 ---
 
-## 📂 Output
+## 📊 Example
 
-Example:
+**Input:**
+
+```
+name,age,salary
+Alice,30,50000
+Bob,,
+Charlie,25,60000
+```
+
+**Output:**
+
+* Cleaned CSV → removes empty rows
+* Summary → calculates statistics for numeric columns
+
+See `/examples` folder for full working example.
+
+---
+
+## 📂 Output
 
 ```
 output/
