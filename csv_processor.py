@@ -10,9 +10,12 @@ What this script does:
 
 from __future__ import annotations
 
+__version__ = "1.0.0"
+
 import argparse
 import csv
 from pathlib import Path
+import sys
 
 
 def read_csv(file_path: Path) -> tuple[list[dict[str, str]], list[str]]:
@@ -20,7 +23,7 @@ def read_csv(file_path: Path) -> tuple[list[dict[str, str]], list[str]]:
     with file_path.open("r", encoding="utf-8", newline="") as csv_file:
         reader = csv.DictReader(csv_file)
         rows = list(reader)
-        headers = reader.fieldnames or []
+        headers = list(reader.fieldnames or [])
     return rows, headers
 
 
@@ -36,7 +39,7 @@ def remove_empty_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
 
 def summarize_numeric_columns(
     rows: list[dict[str, str]], headers: list[str]
-) -> dict[str, dict[str, float]]:
+) -> dict[str, dict[str, int | float]]:
     """Build min/max/avg/count summary for numeric columns."""
     numbers_by_column: dict[str, list[float]] = {header: [] for header in headers}
 
@@ -55,7 +58,7 @@ def summarize_numeric_columns(
         if not numbers:
             continue
         summary[header] = {
-            "count": float(len(numbers)),
+            "count": len(numbers),
             "min": min(numbers),
             "max": max(numbers),
             "avg": sum(numbers) / len(numbers),
@@ -74,7 +77,7 @@ def write_cleaned_csv(
 
 
 def write_summary_report(
-    report_path: Path, summary: dict[str, dict[str, float]], total_rows: int
+    report_path: Path, summary: dict[str, dict[str, int | float]], total_rows: int
 ) -> None:
     """Write a text report with summary statistics."""
     lines = [
@@ -112,9 +115,9 @@ def process_csv(input_file: Path, output_dir: Path) -> None:
     write_cleaned_csv(cleaned_csv_path, headers, cleaned_rows)
     write_summary_report(report_path, summary, len(cleaned_rows))
 
-    print("Processing completed.")
-    print(f"Cleaned CSV: {cleaned_csv_path}")
-    print(f"Summary report: {report_path}")
+    print("✔ Processing completed successfully")
+    print(f"→ Cleaned CSV: {cleaned_csv_path}")
+    print(f"→ Summary report: {report_path}")
 
 
 def parse_args() -> argparse.Namespace:
@@ -128,15 +131,18 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+# Entry point for CLI usage
 def main() -> None:
     args = parse_args()
     input_path = Path(args.input_csv)
     output_dir = Path(args.output_dir)
 
     if not input_path.exists():
-        raise FileNotFoundError(f"Input file not found: {input_path}")
+        print(f"Error: File not found -> {input_path}")
+        sys.exit(1)
     if input_path.suffix.lower() != ".csv":
-        raise ValueError("Input file must be a CSV.")
+        print("Error: Input file must be a CSV.")
+        sys.exit(1)
 
     process_csv(input_path, output_dir)
 
