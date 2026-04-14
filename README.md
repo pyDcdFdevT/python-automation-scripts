@@ -1,22 +1,76 @@
-# python-automation-scripts
-Python scripts for automation and data processing
-# Python Automation Scripts
+# 📊 CSV Processor
 
-Collection of Python scripts focused on automating repetitive tasks and processing data efficiently.
+Simple CLI tool to clean CSV files and generate basic statistics.
 
-## Features
-- CSV file processing
-- Data transformation
-- File handling automation
+---
 
-## Example Use Case
-Input: CSV file with product data  
-Output: Processed data with calculated values
+## 🚀 Features
 
-## Tech Stack
-- Python
-- CSV
+* Removes fully empty rows
+* Detects numeric columns automatically
+* Calculates:
 
-## How to run
+  * Count
+  * Min
+  * Max
+  * Average
+* Generates:
+
+  * Cleaned CSV file
+  * Summary report (.txt)
+
+---
+
+## 🧠 How it works
+
+1. Reads input CSV
+2. Cleans empty rows
+3. Extracts numeric values
+4. Computes statistics
+5. Outputs results to `/output`
+
+---
+
+## ⚙️ Usage
+
 ```bash
-python script.py
+python csv_processor.py input.csv
+```
+
+Custom output directory:
+
+```bash
+python csv_processor.py input.csv --output-dir results
+```
+
+---
+
+## 📂 Output
+
+Example:
+
+```
+output/
+├── data_cleaned.csv
+└── data_summary.txt
+```
+
+---
+
+## 🛠️ Tech
+
+* Python 3
+* Standard Library only (no dependencies)
+
+---
+
+## 📌 Notes
+
+* Non-numeric values are ignored in statistics
+* Input file must be `.csv`
+
+---
+
+## 👨‍💻 Author
+
+Diego
